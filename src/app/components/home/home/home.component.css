@@ -1,0 +1,62 @@
+.home-root-div {
+  margin-top: 5px;
+}
+
+img.user-profile-picture {
+  border-radius: 50%;
+  height: 140px;
+  width: 140px;
+  object-fit: cover;
+}
+
+img.user-profile-picture.active {
+  border-radius: 0px;
+  height: 0px;
+  width: 0px;
+  object-fit: cover;
+}
+
+a.collection-item {
+  display: flex;
+}
+span.secondary-content{
+  margin-left:10px;
+}
+
+@media only screen and (max-width: 600px) {
+  /* For mobile phones: */
+  .middle-content {
+    height: calc(100vh - 112px) !important;
+  }
+}
+
+.middle-content {
+  height: calc(100vh - 70px);
+  overflow: visible scroll;
+}
+
+/* .middle-content::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+} */
+
+.middle-content::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #F5F5F5;
+}
+
+.middle-content::-webkit-scrollbar-thumb
+{
+	background-color: #F90;	
+	/* background-image: -webkit-linear-gradient(45deg,
+	                      rgba(255, 255, 255, .2) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, .2) 50%,
+											  rgba(255, 255, 255, .2) 75%,
+											  transparent 75%,
+											  transparent) */
+}

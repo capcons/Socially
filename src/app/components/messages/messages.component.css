@@ -1,0 +1,16 @@
+.chat-list-container {
+    /* height: 87vh; */
+}
+
+.chat-card-container {
+    height: 82vh;
+}
+
+.messages-main-box {
+    /* height: 90vh; */
+    background: rgb(230, 234, 234);
+}
+
+.chat-list-container-mobile {
+    padding: 5px;
+}

@@ -1,0 +1,14 @@
+<mat-card>
+  <div class="row">
+    <ng-container *ngIf="UsersToDisplay$ | async as Users; else UsersLoading">
+      <div *ngFor="let User of Users" class="Users-container col-6 col-sm-6 col-md-4 col-lg-4">
+        <element-person-profile-card [User]="User" [Who]="Who"></element-person-profile-card>
+      </div>
+    </ng-container>
+    <ng-template #UsersLoading>
+      <div class="div-center">
+        <element-my-loader></element-my-loader>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>

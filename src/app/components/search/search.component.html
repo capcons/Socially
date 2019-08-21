@@ -1,0 +1,43 @@
+<div style="margin: 0 15px;">
+  <mat-card>
+    <form [formGroup]="QueryForm" (submit)="OnSubmit()">
+      <mat-form-field class="w-100">
+        <input matInput formControlName="Query" placeholder="What are you looking for?">
+        <button mat-icon-button matSuffix type="submit">
+          <i class="fal fa-search"></i>
+        </button>
+        <mat-error *ngIf="QueryForm.controls.Query.hasError('minlength')">
+          Type atleast <strong>3 </strong>letters
+        </mat-error>
+        <mat-error *ngIf="QueryForm.controls.Query.hasError('required')">
+          <strong>This field is required</strong>
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card>
+
+  <mat-card>
+    <ng-container *ngIf="PeopleResults$ | async; else PeopleLoading">
+      <mat-card-header>
+        <mat-card-title>People</mat-card-title>
+        <mat-card-subtitle>Found: {{FilteredResults?.length || PeopleResults?.length}} items</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+
+      </mat-card-content>
+    </ng-container>
+    <ng-template #PeopleLoading>
+      PeopleLoading...
+    </ng-template>
+  </mat-card>
+
+  <!-- <mat-card>
+      <mat-card-header>
+        <mat-card-title>People</mat-card-title>
+        <mat-card-subtitle>Found: 12 items</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+  
+      </mat-card-content>
+    </mat-card> -->
+</div>

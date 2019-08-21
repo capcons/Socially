@@ -1,0 +1,75 @@
+<!-- <mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-toolbar routerLink="/Home">{{MyAuth.AppTitle}}</mat-toolbar>
+    <mat-nav-list>
+      <app-left-column></app-left-column>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content> -->
+<mat-toolbar class="Toolbar" color="primary">
+  <!-- <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+        <span aria-label="Side nav toggle icon"><i class="fal fa-bars"></i></span>
+      </button> -->
+  <!-- <span class="logo div-center" mat-button>
+        <img class="logo-image" src="../assets/Images/Logo-socially-solutions-dribbble.png" alt="">
+        {{MyAuth.AppTitle}}
+      </span> -->
+  <span mat-button>{{MyAuth.AppTitle}}</span>
+  <span class="fill-remaining-space"></span>
+  <span class="align-center"></span>
+  <span class="spacer"></span>
+
+  <ng-container *ngIf="!MyAuth.LoggedUserLoading && MyAuth.IsUserLoggedIn; else UserLoading">
+    <!-- <button mat-button class="d-none d-sm-block" routerLinkActive="active" routerLink="/Home">Home</button>
+        <button mat-button class="d-none d-sm-block" routerLinkActive="active" routerLink="/Messages">Messages</button> -->
+    <button mat-icon-button [matMenuTriggerFor]="DropMessages">
+      <i class="fal fa-comment"></i>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="DropFriendRequests">
+      <i class="fal fa-user-circle"></i>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="DropNotifications">
+      <i class="fal fa-bell"></i>
+    </button>
+    <!-- <button mat-button routerLink="/Auth/Login">Login</button> -->
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <img class="btn-profile-menu" [src]="MyAuth.LoggedUser.PhotoURL" alt="...">
+    </button>
+
+    <mat-menu #DropMessages="matMenu">
+      <ng-template matMenuContent>
+        <app-messages-dialog></app-messages-dialog>
+      </ng-template>
+    </mat-menu>
+
+    <mat-menu #DropFriendRequests="matMenu" [overlapTrigger]="true">
+      <ng-template matMenuContent>
+        <app-friend-requests-dialog></app-friend-requests-dialog>
+      </ng-template>
+    </mat-menu>
+
+    <mat-menu #DropNotifications="matMenu">
+      <app-notifications-dialog></app-notifications-dialog>
+    </mat-menu>
+
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="MyAuth.NavTo('User/'+MyAuth.LoggedUser.Id)">
+        <span><i class="fal fa-id-card"></i> View profile</span>
+      </button>
+      <button mat-menu-item (click)="openProfilePicUpdateDialog()">
+        <span><i class="fal fa-edit"></i> Update profile pic</span>
+      </button>
+      <button mat-menu-item (click)="Logout()">
+        <span><i class="fal fa-sign-out-alt"></i> Logout</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+  <ng-template #UserLoading>
+    <span *ngIf="MyAuth.IsUserLoggedIn"><i class="fal fa-spinner fa-spin"></i></span>
+  </ng-template>
+</mat-toolbar>
+<!-- Add Content Here -->
+<router-outlet></router-outlet>
+<!-- </mat-sidenav-content>
+</mat-sidenav-container> -->

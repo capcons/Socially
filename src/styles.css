@@ -1,0 +1,27 @@
+* > * {
+	/* font-family: 'Nunito', sans-serif; */
+	font-family: 'Raleway', sans-serif;
+}
+
+body {
+	margin: 0;
+	height: 100vh !important;
+}
+
+.div-center {
+	display:flex; 
+	justify-content: center; 
+	align-items: center;
+}
+
+.MousePointer {
+	cursor: pointer;
+}
+
+.active {
+	color: #f44336;
+}
+
+.w-100 {
+	width:100%;
+}
