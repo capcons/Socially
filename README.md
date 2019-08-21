@@ -1,27 +1,24 @@
-# KachingsView
+# Socially
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+This is social network website project which is build with [Angular 8](https://angular.io), [Angular Material](https://material.angular.io) for front end design and [Firebase](https://firebase.google.com) cloud for a secure backend.
 
-## Development server
+## Functionality overview
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This application is a social networking site (i.e. Facebook, Instagram). It uses a Firebase Cloud services for all requests, including authentication. You can view a live demo over at https://social-lyy.web.app
 
-## Code scaffolding
+**General functionality:**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Strong authentication via Firebase Authentication including Google and Facebook authentication.
+- Angular router guards to grand access to specific routes only to the authorized users.
+- Secure CRUD operations with strong Firebase Cloud security rules.
+- Used Cloud Functions for critial C*UD operations.
+- Responsive design for mobile and desktop devices with [Angular Material](https://material.angular.io) and [Bootstrap grid system](https://getbootstrap.com/docs/4.0/layout/grid).
+- Adding and updating profile pictures.
+- Uploading and storing images as a post with good quality image compression.
+- Likes, comments on Posts.
+- Instragram inspired Follow/Unfollow system.
+- Chat system for sending/receiving real time messages with delivery/read status.
 
-## Build
+## Production server
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+https://social-lyy.web.app
