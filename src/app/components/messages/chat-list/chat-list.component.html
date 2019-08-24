@@ -28,6 +28,9 @@
               <span *ngIf="LastMessage.Status==1 && LastMessage.FromId==MyAuth.LoggedUser.Id">
                 <i class="fal fa-check"></i>
               </span>
+              <span *ngIf="LastMessage.Status==2 && LastMessage.FromId==MyAuth.LoggedUser.Id">
+                <i class="fal fa-check-double"></i>
+              </span>
               <span style="color: blue" *ngIf="LastMessage.Status==3 && LastMessage.FromId==MyAuth.LoggedUser.Id">
                 <i class="fal fa-check-double"></i>
               </span>

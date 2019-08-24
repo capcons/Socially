@@ -3,7 +3,7 @@ import { MyAuthService } from './my-auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable, of, combineLatest } from 'rxjs';
 import { IMessage } from '../Models/i-message';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -67,14 +67,28 @@ export class ChatsService {
       .where('FromId', '==', this.MyAuth.BasicUserInfo.uid)
       .orderBy('SentOn', 'desc')
       .limit(1)
-    ).valueChanges();
+    ).valueChanges({ idField: 'DocId' });
+
     const ReceivedMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('FromId', '==', WithUserId)
       .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)
       .orderBy('SentOn', 'desc')
       .limit(1)
-    ).valueChanges()
+    ).valueChanges({ idField: 'DocId' })
 
-    return combineLatest(SentMessages$, ReceivedMessages$).pipe(
+    const ReceivedMessagesForDeleveryReport$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('FromId', '==', WithUserId)
+      .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)
+      .orderBy('SentOn', 'desc')
+    ).valueChanges({ idField: 'DocId' })
+
+    return combineLatest(SentMessages$, ReceivedMessages$,ReceivedMessagesForDeleveryReport$).pipe(
+      tap(ret => {
+        const ReceivedMessages = ret[2];
+
+        ReceivedMessages.filter(message => message.Status == 1).forEach(message => {
+          // console.log(message)
+          this.UpdateMessageStatus(message.DocId, 2).subscribe(r => console.log(r))
+        })
+      }),
       switchMap(res => {
         const ret = res[0].concat(res[1]);
         if (ret.length == 2) {
@@ -88,13 +102,13 @@ export class ChatsService {
     )
   }
 
-  UpdateMessageStatus(DocId, Status): Observable<any> {
+  UpdateMessageStatus(DocId: string, Status: number): Observable<any> {
     const UpdateMessageStatus = this.afFunctions.httpsCallable('UpdateMessageStatus');
-    
+
     return UpdateMessageStatus({ DocId, Status })
   }
 
-  DeleteAMessage(MessageId): Observable<any> {
+  DeleteAMessage(MessageId: string): Observable<any> {
     const DeleteAMessageFn = this.afFunctions.httpsCallable('DeleteAMessage');
 
     return DeleteAMessageFn({ MessageId })

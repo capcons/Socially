@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IUser } from 'src/app/Models/i-user';
 import { IMessage } from '../../../Models/i-message'
@@ -14,9 +14,11 @@ import { ConfirmationDialogComponent } from '../../Dialogs/confirmation-dialog/c
   templateUrl: './chat-container.component.html',
   styleUrls: ['./chat-container.component.css']
 })
-export class ChatContainerComponent implements OnInit {
+export class ChatContainerComponent implements OnInit,AfterViewChecked {
   User$: Observable<IUser>;
   Messages$: Observable<IMessage[]>;
+
+  @ViewChild('MessageDiv', { static: false }) private MessageDiv: ElementRef;
 
   User: IUser;
   Messages: IMessage[] = [];
@@ -43,13 +45,21 @@ export class ChatContainerComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      console.log(params.get('UserId'))
       this.ParamUserId = params.get('UserId');
       const ChatRoomId: string = `Room_${this.ParamUserId}_${this.MyAuth.LoggedUser.Id}`;
 
       this.LoadUser(this.ParamUserId);
       this.LoadMessages(this.ParamUserId);
     })
+  }
+
+  ngAfterViewChecked(): void {
+    try {
+      this.MessageDiv.nativeElement.scrollTop = this.MessageDiv.nativeElement.scrollHeight;
+      // console.log(this.MessageDiv.nativeElement.scrollTop)
+    } catch (e) {
+      // console.error(e);
+    }
   }
 
   LoadUser(UserId: string) {
@@ -62,7 +72,7 @@ export class ChatContainerComponent implements OnInit {
   LoadMessages(OfUserId: string) {
     this.Messages$ = this.Chatsrv.LoadMessages(OfUserId).pipe(
       map(docs => {
-        console.log(docs)
+        // console.log(docs)
         return docs.sort((a, b) => {
           return a.SentOn - b.SentOn;
         })
@@ -76,10 +86,7 @@ export class ChatContainerComponent implements OnInit {
 
   UpdateMessageStatus(Messages: IMessage[]) {
     Messages.forEach(message => {
-      console.log("Updating ", message.DocId, ": ", message.Text)
-      this.Chatsrv.UpdateMessageStatus(message.DocId, 3).subscribe(r => {
-        console.log(r)
-      })
+      this.Chatsrv.UpdateMessageStatus(message.DocId, 3).subscribe()
 
     })
   }

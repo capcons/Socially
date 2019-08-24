@@ -3,7 +3,7 @@ import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { FollowService } from 'src/app/Services/follow.service';
 import { ChatsService } from 'src/app/Services/chats.service';
 import { combineLatest, Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IUser } from 'src/app/Models/i-user';
 import { IMessage } from 'src/app/Models/i-message';
 
@@ -31,12 +31,10 @@ export class MessagesDialogComponent implements OnInit {
   }
 
   GetAUser(UserId: string): Observable<IUser> {
-    return this.MyAuth.GetAUserInfoFromStore(UserId).pipe(
-      tap(r => console.log(r))
-    )
+    return this.MyAuth.GetAUserInfoFromStore(UserId)
   }
 
   LastMessage(UserId: string): Observable<IMessage> {
-    return this.ChatSrv.GetLastMessage(UserId).pipe(tap(r => console.log(r)))
+    return this.ChatSrv.GetLastMessage(UserId)
   }
 }

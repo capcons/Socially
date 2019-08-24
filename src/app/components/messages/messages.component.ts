@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, combineLatest, Subscription } from 'rxjs';
 import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { map } from 'rxjs/operators';
 import { FollowService } from 'src/app/Services/follow.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ChatsService } from 'src/app/Services/chats.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
@@ -12,9 +12,11 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
   UserIdListToDisplay$: Observable<string[]>;
   ParamUserId: string;
+
+  Subscriptions: Subscription[] = [];
 
   IsHandset$: Observable<boolean> = this.breakpointObserver.observe(['(min-width: 600px)']).pipe(
     map(r => {
@@ -27,10 +29,17 @@ export class MessagesComponent implements OnInit {
     public FollowSrv: FollowService,
     public ChatSrv: ChatsService,
     public breakpointObserver: BreakpointObserver,
-    public router: Router) { }
+    public router: Router,
+    public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.UpdateUsersList()
+  }
+
+  ngOnDestroy(): void {
+    this.Subscriptions.forEach(sub => {
+      sub.unsubscribe()
+    })
   }
 
   UpdateUsersList() {
@@ -44,6 +53,12 @@ export class MessagesComponent implements OnInit {
           if (!Combined.includes(this.ParamUserId)) {
             Combined.unshift(this.ParamUserId)
           }
+        this.Subscriptions.push(this.activatedRoute.paramMap.subscribe(snap => {
+          // console.log(snap)
+          const param = snap.get('UserId')
+          if (!param)
+            this.MyAuth.NavTo(`Messages/${Combined[0]}`)
+        }))
         return Combined;
       }))
   }

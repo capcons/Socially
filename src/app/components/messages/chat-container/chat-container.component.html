@@ -12,7 +12,7 @@
         <button mat-menu-item (click)="DeleteChat()"><i class="fal fa-trash-alt"></i> Delete</button>
       </mat-menu>
     </mat-card-header>
-    <mat-card-content class="chat-card-content">
+    <mat-card-content #MessageDiv class="chat-card-content">
       <mat-list dense>
         <div class="container">
           <ng-container *ngIf="Messages$ | async as MessagesArr; else MessagesLoading">
@@ -28,13 +28,23 @@
                     <div class="col message-textAndDate">
                       <p class="message-text">{{Message.Text}}</p>
                       <p class="message-time">
-                        <span *ngIf="Message.Status==0"><i class="fal fa-spinner fa-spin"></i> </span>
-                        <span *ngIf="Message.Status==1 && Message.FromId==MyAuth.LoggedUser.Id"><i class="fal fa-check"></i> </span>
-                        <span style="color: blue"*ngIf="Message.Status==3 && Message.FromId==MyAuth.LoggedUser.Id"><i class="fal fa-check-double"></i> </span>
+                        <span *ngIf="Message.Status==0">
+                          <i class="fal fa-spinner fa-spin"></i>
+                        </span>
+                        <span *ngIf="Message.Status==1 && Message.FromId==MyAuth.LoggedUser.Id">
+                          <i class="fal fa-check"></i>
+                        </span>
+                        <span *ngIf="Message.Status==2 && Message.FromId==MyAuth.LoggedUser.Id">
+                          <i class="fal fa-check-double"></i>
+                        </span>
+                        <span style="color: blue" *ngIf="Message.Status==3 && Message.FromId==MyAuth.LoggedUser.Id"><i
+                            class="fal fa-check-double"></i>
+                        </span>
                         {{' '+moment(Message.SentOn).calendar(null, DateTimeFormat)}}
                       </p>
                     </div>
-                    <div *ngIf="Message.FromId==MyAuth.LoggedUser.Id" class="delete-div MousePointer" (click)="DeleteAMessage(Message.DocId)">
+                    <div *ngIf="Message.FromId==MyAuth.LoggedUser.Id" class="delete-div MousePointer"
+                      (click)="DeleteAMessage(Message.DocId)">
                       <span><i class="fal fa-trash"></i></span>
                     </div>
                   </div>
