@@ -3,7 +3,6 @@ import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { cStatesCities } from 'src/app/Models/c-states-cities';
 import { IUser } from 'src/app/Models/i-user';
-import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -73,13 +72,6 @@ export class AdditionalUserInfoComponent implements OnInit {
     await this.MyAuth.afStore.doc("Users/" + User.Id).set(User)
     this.MyAuth.NavTo('/Home')
     this.Loading = false;
-    // .then(() => {
-    //   this.MyAuth.NavTo('/Home')
-    //   this.Loading = false;
-    // })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
   }
 
 }

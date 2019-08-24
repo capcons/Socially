@@ -19,7 +19,7 @@ export class FriendRequestsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getPendingRequests();
+    // this.getPendingRequests();
   }
 
   public getPendingRequests() {
