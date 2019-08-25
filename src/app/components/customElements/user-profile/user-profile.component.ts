@@ -31,13 +31,13 @@ export class UserProfileComponent implements OnInit {
       this.Following$ = this.followSrv.GetFollowStatus(this.User.Id);
   }
 
-  FollowAUser() {
+  FollowThisUser() {
     this.followSrv.FollowAUser(this.User.Id, this.User.DisplayName, this.User.PhotoURL).subscribe(r => {
       console.log(r)
     })
   }
 
-  UnfollowAUser() {
+  UnfollowThisUser() {
     const confirmationDialogRef = this.MyAuth.Dialogs.open(ConfirmationDialogComponent, {
       data: {
         Title: 'Unfollow',
