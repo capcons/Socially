@@ -15,9 +15,4 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
 
   }
-
-  AuthenticatedUserAccess() {
-    console.log('AuthenticatedUserAccess() called');
-  }//AuthenticatedUserAccess
-
 }

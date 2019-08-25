@@ -20,7 +20,6 @@ import { UserResolverService } from './Services/user-resolver.service';
 import { ImageCompressService, ResizeOptions } from 'ng2-image-compress';
 import { ImageOptimizationService } from './Services/image-optimization.service';
 import { SharedModule } from './Modules/shared.module';
-import { MatButtonModule, MatToolbarModule, MatMenuModule, MatSnackBarModule, MatDialogModule, MatSidenavModule, MatIconModule, MatListModule, MatFormFieldModule, MatProgressBarModule } from '@angular/material';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ConfirmationDialogComponent } from './components/Dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -54,7 +53,9 @@ import { MaterialModule } from './Modules/Material.module';
     SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    
+    AngularFireModule.initializeApp(
+      
+    ),
     AngularFireAuthModule,
     AngularFireAuthGuardModule,
     AngularFirestoreModule, //.enablePersistence(),

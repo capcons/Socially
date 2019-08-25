@@ -2,8 +2,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from 'src/app/components/home/home/home.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
-import { SearchComponent } from 'src/app/components/search/search.component';
 import { MiddleColumnComponent } from 'src/app/components/home/middle-column/middle-column.component';
+import { SearchComponent } from 'src/app/components/search/search.component';
 
 const routes: Routes = [
   {
@@ -15,13 +15,15 @@ const routes: Routes = [
       component: MiddleColumnComponent
     },
     {
-      path: 'Search',
-      component: SearchComponent
+      path: 'Search', 
+      // component: SearchComponent
+      loadChildren: () => import('../FeatureModules/search.module').then(m => m.SearchModule)
     },
-    {
-      path: '',
-      redirectTo: 'Home'
-    }]
+    // {
+    //   path: '',
+    //   redirectTo: 'Home'
+    // }
+  ]
     // resolve: { LoggedUserData: UserResolverService },
   }
 ];
