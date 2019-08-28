@@ -11,14 +11,11 @@
         <app-left-column></app-left-column>
       </div>
       <div class="col col-xl-5 middle-content">
-        <!-- <app-middle-column [iLoggedUser]="MyAuth.LoggedUser"></app-middle-column> -->
         <router-outlet></router-outlet>
       </div>
       <div class="col-md-4 col-lg-3 d-none d-md-block end-content">
-        <app-right-column [iLoggedUser]="MyAuth.LoggedUser"></app-right-column>
+        <app-right-column></app-right-column>
       </div>
     </ng-container>
   </div>
 </div>
-
-<!-- <app-middle-column></app-middle-column> -->

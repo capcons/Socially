@@ -26,6 +26,7 @@ import { ConfirmationDialogComponent } from './components/Dialogs/confirmation-d
 import { ProfilePicUpdateDialogComponent } from './components/Dialogs/profile-pic-update-dialog/profile-pic-update-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './Modules/Material.module';
+import { FirebaseAPIKeys } from 'src/environments/environment.prod';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { MaterialModule } from './Modules/Material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(
-      
+      FirebaseAPIKeys
     ),
     AngularFireAuthModule,
     AngularFireAuthGuardModule,

@@ -2,6 +2,16 @@
     /* height: 87vh; */
 }
 
+.chat-heads-container-mobile {
+    height: 82vh;
+    overflow: auto;
+}
+
+.chat-heads-container {
+    height: 71vh;
+    overflow: auto;
+}
+
 .chat-card-container {
     height: 82vh;
 }

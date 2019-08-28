@@ -54,6 +54,7 @@
     </mat-menu>
 
     <mat-menu #menu="matMenu">
+      <h3 class="user-name">{{MyAuth.LoggedUser.DisplayName}}</h3>
       <button mat-menu-item (click)="MyAuth.NavTo('User/'+MyAuth.LoggedUser.Id)">
         <span><i class="fal fa-id-card"></i> View profile</span>
       </button>

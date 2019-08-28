@@ -9,7 +9,7 @@
 }
 
 .chat-card-content {
-    height: 65%;
+    height: 73%;
     overflow: auto;
 }
 
@@ -60,31 +60,4 @@
 .delete-div {
     padding-right: 10px;
     padding-top: 5px;
-}
-
-/* Scrollbar */
-.chat-card-content::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
-}
-
-.chat-card-content::-webkit-scrollbar
-{
-	width: 5px;
-	background-color: #F5F5F5;
-}
-
-.chat-card-content::-webkit-scrollbar-thumb
-{
-	background-color: #F90;	
-	/* background-image: -webkit-linear-gradient(45deg,
-	                                          rgba(255, 255, 255, .2) 25%,
-											  transparent 25%,
-											  transparent 50%,
-											  rgba(255, 255, 255, .2) 50%,
-											  rgba(255, 255, 255, .2) 75%,
-											  transparent 75%,
-											  transparent) */
 }

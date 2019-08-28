@@ -1,9 +1,9 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar src="{{iLoggedUser.PhotoURL}}">
-    <mat-card-title (click)="MyAuth.NavTo('/User/'+iLoggedUser.Id)" class="MousePointer">
-      {{iLoggedUser.DisplayName}}</mat-card-title>
-    <mat-card-subtitle>{{iLoggedUser.About}}</mat-card-subtitle>
+    <img mat-card-avatar src="{{MyAuth.LoggedUser.PhotoURL}}">
+    <mat-card-title (click)="MyAuth.NavTo('/User/'+MyAuth.LoggedUser.Id)" class="MousePointer">
+      {{MyAuth.LoggedUser.DisplayName}}</mat-card-title>
+    <mat-card-subtitle>{{MyAuth.LoggedUser.About}}</mat-card-subtitle>
     <button mat-icon-button class="btn-menu" [matMenuTriggerFor]="menu" aria-label="Open basic menu">
       <i class="fal fa-ellipsis-v fa-lg"></i>
     </button>
@@ -19,7 +19,7 @@
   <mat-card-header>
     <mat-card-title (click)="MyAuth.NavTo('/Messages')" class="MousePointer">Messages</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="chat-heads-container">
       <app-messages-dialog></app-messages-dialog>
   </mat-card-content>
 </mat-card>

@@ -16,7 +16,6 @@ import { Observable, fromEvent } from 'rxjs';
   styleUrls: ['./middle-column.component.css']
 })
 export class MiddleColumnComponent implements OnInit {
-  @Input() iLoggedUser: IUser;
 
   PostsToDisplay$: Observable<IPost[]>;
   CurrentUser: IUser;
@@ -95,8 +94,8 @@ export class MiddleColumnComponent implements OnInit {
     this.Uploading = true;
     this.DisablePostBtn = true;
     const Cap: string = this.InputCaption;
-    const ImagePath: string = this.iLoggedUser.Id + '/PostedImages/' + this.FileName + '-' + moment().format('D-M-YYYY');
-    const ImageThumbPath: string = this.iLoggedUser.Id + '/PostedImages/' + this.FileName + '-' + moment().format('D-M-YYYY') + '.Thumb';
+    const ImagePath: string = this.MyAuth.LoggedUser.Id + '/PostedImages/' + this.FileName + '-' + moment().format('D-M-YYYY');
+    const ImageThumbPath: string = this.MyAuth.LoggedUser.Id + '/PostedImages/' + this.FileName + '-' + moment().format('D-M-YYYY') + '.Thumb';
 
     const ImageRef = this.storage.ref(ImagePath);
     const ImageThumbRef = this.storage.ref(ImageThumbPath);

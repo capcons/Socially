@@ -79,7 +79,9 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
       }),
       tap(r => {
         this.Messages = r;
-        this.UpdateMessageStatus(r.filter(e => e.Status == 1 && e.ToId == this.MyAuth.LoggedUser.Id));
+        const _filter = r.filter(e => e.ToId == this.MyAuth.LoggedUser.Id).filter(e => e.Status == 1 || e.Status==2);
+        // console.log(_filter)
+        this.UpdateMessageStatus(_filter);
       })
     )
   }

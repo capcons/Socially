@@ -1,9 +1,10 @@
   <div class="row user-box">
-    <div class="col-3 user-pic-box">
+    <div class="col-3 user-pic-box MousePointer" (click)="MyAuth.NavTo('User/'+User.Id)">
       <img class="user-pic" src="{{User.PhotoURL}}">
     </div>
     <div class="col user-name-box">
-      <span class="user-name">{{User.DisplayName}}</span>
+      <span class="user-name MousePointer" (click)="MyAuth.NavTo('User/'+User.Id)">{{User.DisplayName}}</span>
+      <br>
       <ng-container *ngIf="Following$ | async as Following; else FollowLoading">
         <ng-container *ngIf="Following.DocId; else NotFollowing">
           <button mat-stroked-button class="btn-action-mobile" color="primary" (click)="UnfollowThisUser()">
