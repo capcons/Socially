@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MyAuthService } from 'src/app/Services/my-auth.service';
 
 @Component({
   selector: 'element-mini-navbar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiniNavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public MyAuth: MyAuthService) { }
 
   ngOnInit() {
   }

@@ -4,8 +4,8 @@
       <button mat-icon-button routerLinkActive="active" routerLink="/Home">
         <i class="fal fa-home"></i>
       </button>
-      <button mat-icon-button routerLinkActive="active" routerLink="/Friends">
-        <i class="fal fa-user-friends"></i>
+      <button mat-icon-button routerLinkActive="active" routerLink="/User/{{MyAuth.LoggedUser?.Id}}">
+        <i class="fal fa-user"></i>
       </button>
       <button mat-icon-button routerLinkActive="active" routerLink="/Messages">
         <i class="fal fa-comment-alt-lines"></i>
