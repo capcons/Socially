@@ -26,10 +26,9 @@ export class ChatListComponent implements OnInit {
     public ChatSrv: ChatsService, ) { }
 
   ngOnInit() {
-    // console.log(this.IsForHandset)
     this.LastMessage$ = this.ChatSrv.GetLastMessage(this.UserId).pipe(
       tap(r => {
-        if (r.Status === 1 && r.ToId === this.MyAuth.LoggedUser.Id)
+        if (r.Status !== 3 && r.ToId === this.MyAuth.LoggedUser.Id)
           this.HasUnreadMessages = true;
         else
           this.HasUnreadMessages = false;

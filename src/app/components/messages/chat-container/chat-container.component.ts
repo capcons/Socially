@@ -56,7 +56,6 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
   ngAfterViewChecked(): void {
     try {
       this.MessageDiv.nativeElement.scrollTop = this.MessageDiv.nativeElement.scrollHeight;
-      // console.log(this.MessageDiv.nativeElement.scrollTop)
     } catch (e) {
       // console.error(e);
     }

@@ -53,12 +53,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
           if (!Combined.includes(this.ParamUserId)) {
             Combined.unshift(this.ParamUserId)
           }
-        this.Subscriptions.push(this.activatedRoute.paramMap.subscribe(snap => {
-          // console.log(snap)
-          const param = snap.get('UserId')
-          if (!param)
-            this.MyAuth.NavTo(`Messages/${Combined[0]}`)
-        }))
+        // this.Subscriptions.push(this.activatedRoute.paramMap.subscribe(snap => {
+        //   // console.log(snap)
+        //   const param = snap.get('UserId')
+        //   if (!param)
+        //     this.MyAuth.NavTo(`Messages/${Combined[0]}`)
+        // }))
         return Combined;
       }))
   }

@@ -4,7 +4,6 @@
     <ng-container *ngIf="User$ | async as User; else UserLoading">
       <mat-list-item [routerLink]="[ '/Messages', User.Id ]" routerLinkActive="active-route"
         class="user-tab MousePointer">
-        <!-- <span class="piller"></span> -->
         <img mat-list-avatar [src]="User.PhotoURL">
       </mat-list-item>
     </ng-container>
