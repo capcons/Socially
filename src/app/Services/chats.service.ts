@@ -3,7 +3,8 @@ import { MyAuthService } from './my-auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable, of, combineLatest } from 'rxjs';
 import { IMessage } from '../Models/i-message';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, map } from 'rxjs/operators';
+import { FollowService } from './follow.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class ChatsService {
 
   constructor(
     public MyAuth: MyAuthService,
-    public afFunctions: AngularFireFunctions) { }
+    private FollowSrv: FollowService,
+    private afFunctions: AngularFireFunctions) { }
 
   SendAMessage(To: string, Text: string): Observable<any> {
     const SendAMessage = this.afFunctions.httpsCallable('SendAMessage');
@@ -80,7 +82,7 @@ export class ChatsService {
       .orderBy('SentOn', 'desc')
     ).valueChanges({ idField: 'DocId' })
 
-    return combineLatest(SentMessages$, ReceivedMessages$,ReceivedMessagesForDeleveryReport$).pipe(
+    return combineLatest(SentMessages$, ReceivedMessages$, ReceivedMessagesForDeleveryReport$).pipe(
       tap(ret => {
         const ReceivedMessages = ret[2];
 
@@ -100,6 +102,15 @@ export class ChatsService {
         return of({})
       })
     )
+  }
+
+  GetActiveChatUsersList(): Observable<string[]> {
+    return combineLatest(
+      this.FollowSrv.GetAUserFollowersNFollowingUserIds(this.MyAuth.BasicUserInfo.uid),
+      this.GetUnfollowChatUserIds())
+      .pipe(map(r => {
+        return [...new Set(r[1].concat(r[0]))];
+      }))
   }
 
   UpdateMessageStatus(DocId: string, Status: number): Observable<any> {

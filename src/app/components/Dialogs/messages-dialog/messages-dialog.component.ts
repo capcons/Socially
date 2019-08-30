@@ -21,13 +21,11 @@ export class MessagesDialogComponent implements OnInit {
     public ChatSrv: ChatsService, ) { }
 
   ngOnInit() {
-    this.UserIdListToDisplay$ = combineLatest(
-      this.FollowSrv.GetAUserFollowersNFollowingUserIds(this.MyAuth.BasicUserInfo.uid),
-      this.ChatSrv.GetUnfollowChatUserIds())
-      .pipe(map(r => {
-        var Combined = [...new Set(r[1].concat(r[0]))];
-        return Combined;
-      }))
+    this.UserIdListToDisplay$ = this.ChatSrv.GetActiveChatUsersList()
+      // .pipe(map(r => {
+      //   var Combined = [...new Set(r[1].concat(r[0]))];
+      //   return Combined;
+      // }))
   }
 
   GetAUser(UserId: string): Observable<IUser> {

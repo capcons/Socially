@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IUser } from 'src/app/Models/i-user';
 import { IMessage } from '../../../Models/i-message'
 import { MyAuthService } from 'src/app/Services/my-auth.service';
@@ -46,7 +46,6 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
       this.ParamUserId = params.get('UserId');
-      const ChatRoomId: string = `Room_${this.ParamUserId}_${this.MyAuth.LoggedUser.Id}`;
 
       this.LoadUser(this.ParamUserId);
       this.LoadMessages(this.ParamUserId);
@@ -71,7 +70,6 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
   LoadMessages(OfUserId: string) {
     this.Messages$ = this.Chatsrv.LoadMessages(OfUserId).pipe(
       map(docs => {
-        // console.log(docs)
         return docs.sort((a, b) => {
           return a.SentOn - b.SentOn;
         })
@@ -79,7 +77,6 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
       tap(r => {
         this.Messages = r;
         const _filter = r.filter(e => e.ToId == this.MyAuth.LoggedUser.Id).filter(e => e.Status == 1 || e.Status==2);
-        // console.log(_filter)
         this.UpdateMessageStatus(_filter);
       })
     )
@@ -88,7 +85,6 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
   UpdateMessageStatus(Messages: IMessage[]) {
     Messages.forEach(message => {
       this.Chatsrv.UpdateMessageStatus(message.DocId, 3).subscribe()
-
     })
   }
 
@@ -103,7 +99,7 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
       ToId: this.ParamUserId,
     }
     this.Messages.push(newMessage)
-    this.Chatsrv.SendAMessage(this.ParamUserId, Text).subscribe(r => {
+    this.Chatsrv.SendAMessage(this.ParamUserId, Text).subscribe(() => {
       this.MessageText = '';
       this.SendingMessage = false;
     })
