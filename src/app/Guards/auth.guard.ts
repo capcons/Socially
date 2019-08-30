@@ -13,34 +13,17 @@ export class AuthGuard implements CanActivate {
     private MyAuth: MyAuthService) { }
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    console.log("AuthGaurd");
+    // console.log("AuthGaurd");
     return this.MyAuth.afAuth.authState.pipe(
       take(1),
       map(user => !!user), 
       tap(IsLoggedIn => {
-        console.log(IsLoggedIn)
+        // console.log(IsLoggedIn)
         if (!IsLoggedIn) {
           console.log("Access denied, require login.");
           this.MyAuth.NavTo('/Auth/Login');
         }
       })
     )
-
-    // if (this.MyAuth.GetAccessToken()) {
-    //   return this.MyAuth.GetLoggedUserInfo().pipe(
-    //     map(res => {
-    //       if (res.DisplayName) { 
-    //         return true;
-    //       }
-    //       else {
-    //         this.MyAuth.NavTo('/Login');
-    //       }
-    //       return false;
-    //     })
-    //   )
-    // } else {
-    //   this.MyAuth.NavTo('/Login');
-    //   return false;
-    // }
   }
 }

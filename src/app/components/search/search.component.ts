@@ -35,7 +35,6 @@ export class SearchComponent implements OnInit {
           })
         }),
         tap(r => {
-          console.log(r)
           this.PeopleResults = r;
           this.FilteredResults = r;
         })
@@ -51,15 +50,7 @@ export class SearchComponent implements OnInit {
 
           return DisplayName.includes(q.toLowerCase())
         });
-        console.log(this.FilteredResults)
       }
     })
   }
-
-  OnSubmit() {
-    if (this.QueryForm.valid) {
-
-    }
-  }
-
 }

@@ -1,17 +1,11 @@
 <div style="margin: 0 15px;">
   <mat-card>
-    <form [formGroup]="QueryForm" (submit)="OnSubmit()">
+    <form [formGroup]="QueryForm">
       <mat-form-field class="w-100">
-        <input matInput formControlName="Query" placeholder="What are you looking for?">
+        <input matInput formControlName="Query" placeholder="Whom are you looking for?">
         <button mat-icon-button matSuffix type="submit">
           <i class="fal fa-search"></i>
         </button>
-        <mat-error *ngIf="QueryForm.controls.Query.hasError('minlength')">
-          Type atleast <strong>3 </strong>letters
-        </mat-error>
-        <mat-error *ngIf="QueryForm.controls.Query.hasError('required')">
-          <strong>This field is required</strong>
-        </mat-error>
       </mat-form-field>
     </form>
   </mat-card>

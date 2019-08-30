@@ -19,10 +19,10 @@ const routes: Routes = [
       // component: SearchComponent
       loadChildren: () => import('../FeatureModules/search.module').then(m => m.SearchModule)
     },
-    // {
-    //   path: '',
-    //   redirectTo: 'Home'
-    // }
+    {
+      path: '',
+      redirectTo: 'Home'
+    }
   ]
     // resolve: { LoggedUserData: UserResolverService },
   }
