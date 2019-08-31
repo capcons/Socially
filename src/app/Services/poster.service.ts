@@ -5,7 +5,7 @@ import { MyAuthService } from './my-auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { map } from 'rxjs/operators';
+import { map, share } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,9 +33,10 @@ export class PosterService {
   public GetAllPosts(): Observable<IPost[]> {
     return this.afStore.collection<IPost>('Posts').valueChanges({ idField: 'Id' }).pipe(
       map(res => {
-        const ret = res.sort((a, b) => b.PostedOn-a.PostedOn)
+        const ret = res.sort((a, b) => b.PostedOn - a.PostedOn)
         return ret;
-      })
+      }),
+      share()
     )
   }
 
@@ -44,26 +45,27 @@ export class PosterService {
       map(r => {
         r.Id = PostId;
         return r
-      })
+      }),
+      share()
     )
   }
 
   public GetAUserPosts(UserId: string): Observable<IPost[]> {
     return this.afStore.collection<IPost>(`Posts`, ref =>
-      ref.where('OwnerId', '==', UserId)
-    ).valueChanges({ idField: 'Id' })
+      ref.where('OwnerId', '==', UserId))
+      .valueChanges({ idField: 'Id' }).pipe(share())
   }
 
   public GetAPostComments(PostId: string): Observable<IComment[]> {
     return this.afStore.collection<IComment>(`Comments/`, ref =>
       ref.where('PostId', '==', PostId).orderBy("CommentedOn"))
-      .valueChanges({ idField: 'Id' })
+      .valueChanges({ idField: 'Id' }).pipe(share())
   }
 
   public GetAPostHearts(PostId: string): Observable<IHeart[]> {
     return this.afStore.collection<IHeart>('Hearts/', ref =>
       ref.where('PostId', '==', PostId))
-      .valueChanges()
+      .valueChanges().pipe(share())
   }
 
   public CheckIsPostHeartedByUser(PostId: string, UserId: string): Observable<number> {
@@ -73,7 +75,8 @@ export class PosterService {
           // 1=Hearted, 2=not Hearted.
           res = res ? 1 : 2;
           return res;
-        })
+        }),
+        share()
       )
   }
 

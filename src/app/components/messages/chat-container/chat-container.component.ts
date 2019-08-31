@@ -4,7 +4,7 @@ import { IUser } from 'src/app/Models/i-user';
 import { IMessage } from '../../../Models/i-message'
 import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { tap, map, first } from 'rxjs/operators';
 import * as moment from 'moment';
 import { ChatsService } from 'src/app/Services/chats.service';
 import { ConfirmationDialogComponent } from '../../Dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -14,7 +14,7 @@ import { ConfirmationDialogComponent } from '../../Dialogs/confirmation-dialog/c
   templateUrl: './chat-container.component.html',
   styleUrls: ['./chat-container.component.css']
 })
-export class ChatContainerComponent implements OnInit,AfterViewChecked {
+export class ChatContainerComponent implements OnInit, AfterViewChecked {
   User$: Observable<IUser>;
   Messages$: Observable<IMessage[]>;
 
@@ -76,7 +76,7 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
       }),
       tap(r => {
         this.Messages = r;
-        const _filter = r.filter(e => e.ToId == this.MyAuth.LoggedUser.Id).filter(e => e.Status == 1 || e.Status==2);
+        const _filter = r.filter(e => e.ToId == this.MyAuth.LoggedUser.Id).filter(e => e.Status == 1 || e.Status == 2);
         this.UpdateMessageStatus(_filter);
       })
     )
@@ -90,6 +90,7 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
 
   Send(Text: string) {
     this.SendingMessage = true;
+    this.MessageText = '';
     const newMessage: IMessage = {
       FromId: this.MyAuth.LoggedUser.Id,
       DocId: `${Date.now()}`,
@@ -99,10 +100,11 @@ export class ChatContainerComponent implements OnInit,AfterViewChecked {
       ToId: this.ParamUserId,
     }
     this.Messages.push(newMessage)
-    this.Chatsrv.SendAMessage(this.ParamUserId, Text).subscribe(() => {
-      this.MessageText = '';
-      this.SendingMessage = false;
-    })
+    this.Chatsrv.SendAMessage(this.ParamUserId, Text)
+      .pipe(first())
+      .subscribe(() => {
+        this.SendingMessage = false;
+      })
   }
 
   DeleteAMessage(MessageId: string) {

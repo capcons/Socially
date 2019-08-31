@@ -6,7 +6,7 @@ import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { PosterService } from 'src/app/Services/poster.service';
 import { Observable } from 'rxjs';
 import { FollowService } from 'src/app/Services/follow.service';
-import { tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'element-post-card',
@@ -28,7 +28,6 @@ export class PostCardComponent implements OnInit {
   ImageLoaded: boolean = false;
   CommentUploading: boolean = false;
   ShowComments: boolean = false;
-  // ShowMenu: boolean = false;
 
   ImageOpacity: number = 0;
 
@@ -49,10 +48,11 @@ export class PostCardComponent implements OnInit {
     public followSrv: FollowService, ) { }
 
   ngOnInit() {
-    this.MyAuth.GetAUserInfoFromStore(this.PostData.OwnerId).subscribe(User => {
-      this.Owner = User;
-      this.UserLoaded = true;
-    })
+    this.MyAuth.GetAUserInfoFromStore(this.PostData.OwnerId).pipe(take(1))
+      .subscribe(User => {
+        this.Owner = User;
+        this.UserLoaded = true;
+      })
 
     this.Comments$ = this.poster.GetAPostComments(this.PostData.Id);
     this.IsHeartedByUser$ = this.poster.CheckIsPostHeartedByUser(this.PostData.Id, this.MyAuth.LoggedUser.Id);
@@ -90,7 +90,7 @@ export class PostCardComponent implements OnInit {
 
   ImgLoaded(Image, ImageURL) {
     Image.src = ImageURL;
-    this.ImageLoaded=true;
+    this.ImageLoaded = true;
     this.ImageOpacity = 1;
   }
 
@@ -100,11 +100,8 @@ export class PostCardComponent implements OnInit {
 
   DeletePost() {
     this.poster.DeleteAPost(this.PostData.Id).subscribe(r => {
-      console.log(r)
-      // if (r.Code = 200)
+      // console.log(r)
       this.MyAuth.Notify.openSnackBar(r.Message, '')
-      // else
-      //   this.MyAuth.Notify.openSnackBar(r.Message, '')
     })
   }
 }

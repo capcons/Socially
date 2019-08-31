@@ -3,7 +3,7 @@ import { MyAuthService } from './my-auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable, of, combineLatest } from 'rxjs';
 import { IMessage } from '../Models/i-message';
-import { switchMap, tap, map } from 'rxjs/operators';
+import { switchMap, tap, map, share } from 'rxjs/operators';
 import { FollowService } from './follow.service';
 
 @Injectable({
@@ -24,27 +24,26 @@ export class ChatsService {
 
   LoadMessages(UserId: string): Observable<IMessage[]> {
     const SentMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('ToId', '==', UserId)
-      .where('FromId', '==', this.MyAuth.BasicUserInfo.uid)).valueChanges({ idField: 'DocId' });
+      .where('FromId', '==', this.MyAuth.BasicUserInfo.uid)).valueChanges({ idField: 'DocId' }).pipe(share());
     const ReceivedMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('FromId', '==', UserId)
-      .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)).valueChanges({ idField: 'DocId' })
+      .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)).valueChanges({ idField: 'DocId' }).pipe(share())
 
-    return combineLatest(SentMessages$, ReceivedMessages$).pipe(
+      const combinedReturn =  combineLatest(SentMessages$, ReceivedMessages$).pipe(
       switchMap(res => {
         const ret = res[0].concat(res[1]);
-        // console.log(ret)
         return of(ret);
       })
     )
-    // return merge(SentMessages$, ReceivedMessages$)
+    return combinedReturn.pipe(share())
   }
 
   GetUnfollowChatUserIds(): Observable<string[]> {
     const SentMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref
-      .where('FromId', '==', this.MyAuth.BasicUserInfo.uid).orderBy('SentOn', 'desc')).valueChanges();
+      .where('FromId', '==', this.MyAuth.BasicUserInfo.uid).orderBy('SentOn', 'desc')).valueChanges().pipe(share());
     const ReceivedMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.
-      where('ToId', '==', this.MyAuth.BasicUserInfo.uid).orderBy('SentOn', 'desc')).valueChanges()
+      where('ToId', '==', this.MyAuth.BasicUserInfo.uid).orderBy('SentOn', 'desc')).valueChanges().pipe(share())
 
-    return combineLatest(SentMessages$, ReceivedMessages$).pipe(
+    const combinedReturn = combineLatest(SentMessages$, ReceivedMessages$).pipe(
       switchMap(res => {
         const SentMessageUsers = res[0]
         const ReceivedMessageUsers = res[1]
@@ -62,6 +61,7 @@ export class ChatsService {
         return of(CombinedUserIds);
       })
     )
+    return combinedReturn.pipe(share());
   }
 
   GetLastMessage(WithUserId: string): Observable<IMessage> {
@@ -69,20 +69,20 @@ export class ChatsService {
       .where('FromId', '==', this.MyAuth.BasicUserInfo.uid)
       .orderBy('SentOn', 'desc')
       .limit(1)
-    ).valueChanges({ idField: 'DocId' });
+    ).valueChanges({ idField: 'DocId' }).pipe(share());
 
     const ReceivedMessages$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('FromId', '==', WithUserId)
       .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)
       .orderBy('SentOn', 'desc')
       .limit(1)
-    ).valueChanges({ idField: 'DocId' })
+    ).valueChanges({ idField: 'DocId' }).pipe(share())
 
     const ReceivedMessagesForDeleveryReport$ = this.MyAuth.afStore.collection<IMessage>(`Messages`, ref => ref.where('FromId', '==', WithUserId)
       .where('ToId', '==', this.MyAuth.BasicUserInfo.uid)
       .orderBy('SentOn', 'desc')
-    ).valueChanges({ idField: 'DocId' })
+    ).valueChanges({ idField: 'DocId' }).pipe(share())
 
-    return combineLatest(SentMessages$, ReceivedMessages$, ReceivedMessagesForDeleveryReport$).pipe(
+    const combinedReturn= combineLatest(SentMessages$, ReceivedMessages$, ReceivedMessagesForDeleveryReport$).pipe(
       tap(ret => {
         const ReceivedMessages = ret[2];
 
@@ -102,6 +102,7 @@ export class ChatsService {
         return of({})
       })
     )
+    return combinedReturn.pipe(share())
   }
 
   GetActiveChatUsersList(): Observable<string[]> {
@@ -110,7 +111,8 @@ export class ChatsService {
       this.GetUnfollowChatUserIds())
       .pipe(map(r => {
         return [...new Set(r[1].concat(r[0]))];
-      }))
+      }),
+      share())
   }
 
   UpdateMessageStatus(DocId: string, Status: number): Observable<any> {

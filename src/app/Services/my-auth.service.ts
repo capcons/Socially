@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, share } from 'rxjs/operators';
 import { IUser } from '../Models/i-user';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -71,11 +71,11 @@ export class MyAuthService {
   }
 
   public GetAllUsersFromStore(): Observable<IUser[]> {
-    return this.afStore.collection<IUser>('Users/').valueChanges()
+    return this.afStore.collection<IUser>('Users/').valueChanges().pipe(share())
   }
 
   public GetAUserInfoFromStore(UserId: string): Observable<IUser> {
-    return this.afStore.doc<IUser>('Users/' + UserId).valueChanges()
+    return this.afStore.doc<IUser>('Users/' + UserId).valueChanges().pipe(share())
   }
 
   public UpdateUserInfo(Value): Observable<void> {

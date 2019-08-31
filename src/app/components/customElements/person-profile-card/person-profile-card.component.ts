@@ -9,7 +9,7 @@ import { FollowService } from 'src/app/Services/follow.service';
   styleUrls: ['./person-profile-card.component.css']
 })
 export class PersonProfileCardComponent implements OnInit {
-  @Input() User: IFollow;
+  @Input() Data: IFollow;
   @Input() Who: string;
   UserToDisplay: IUser;
 
@@ -19,10 +19,10 @@ export class PersonProfileCardComponent implements OnInit {
 
   ngOnInit() {
     if (this.Who == 'Following') {
-      this.UserToDisplay = this.User.SecondUser;
+      this.UserToDisplay = this.Data.SecondUser;
     }
     else if (this.Who == 'Followers') {
-      this.UserToDisplay = this.User.FirstUser;
+      this.UserToDisplay = this.Data.FirstUser;
     }
   }
 

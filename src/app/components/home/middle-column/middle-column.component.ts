@@ -3,7 +3,7 @@ import { ImageOptimizationService } from 'src/app/Services/image-optimization.se
 import { ImageCompressService } from 'ng2-image-compress';
 import { AngularFireStorage } from '@angular/fire/storage';
 import * as moment from 'moment';
-import { finalize, take, map } from 'rxjs/operators';
+import { finalize, take, map, share } from 'rxjs/operators';
 import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { IPost, INewPost, IImageCords } from 'src/app/Models/i-post';
 import { IUser } from 'src/app/Models/i-user';
@@ -57,11 +57,7 @@ export class MiddleColumnComponent implements OnInit {
     private imageOptSrvc: ImageOptimizationService) { }
 
   ngOnInit() {
-    this.PostsToDisplay$ = this.poster.GetAllPosts()
-    // .pipe(take(1));
-    // this.PostsToDisplay$ = this.poster.GetAllPosts().pipe(
-
-    // );
+    this.PostsToDisplay$ = this.poster.GetAllPosts().pipe(share())
   }
 
   TrackByPostId(Index: number, Post: IPost): string {

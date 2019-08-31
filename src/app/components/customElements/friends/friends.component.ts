@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class FriendsComponent implements OnInit {
   @Input() Who: string;
   @Input() UserId: string;
-  UsersToDisplay$: Observable<IFollow[]>;
+  FollowsItemsToDisplay$: Observable<IFollow[]>;
 
   constructor(
     public MyAuth: MyAuthService,
@@ -22,10 +22,10 @@ export class FriendsComponent implements OnInit {
   ngOnInit() {
     console.log(this.Who, ' - ', this.UserId)
     if (this.Who == 'Followers') {
-      this.UsersToDisplay$ = this.followSrv.GetAUserFollowers(this.UserId);
+      this.FollowsItemsToDisplay$ = this.followSrv.GetAUserFollowers(this.UserId);
     }
     else if (this.Who == 'Following') {
-      this.UsersToDisplay$ = this.followSrv.GetAUserFollowing(this.UserId);
+      this.FollowsItemsToDisplay$ = this.followSrv.GetAUserFollowing(this.UserId);
     }
   }
 

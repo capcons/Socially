@@ -3,7 +3,7 @@ import { MyAuthService } from './my-auth.service';
 import { AngularFireFunctions } from '@angular/fire/functions';
 import { Observable, combineLatest, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, tap, switchMap } from 'rxjs/operators';
+import { map, tap, switchMap, share } from 'rxjs/operators';
 import { IUser, IFollow } from '../Models/i-user';
 
 @Injectable({
@@ -37,24 +37,25 @@ export class FollowService {
             return 'No'
           else
             return r;
-        })
+        }),
+        share()
       )
   }
 
   GetAUserFollowers(UserId: string): Observable<IFollow[]> {
     return this.afStore.collection<IFollow>('Follows', ref =>
       ref.where('SecondUser.Id', '==', UserId)
-    ).valueChanges()
+    ).valueChanges().pipe(share())
   }
 
   GetAUserFollowing(UserId: string): Observable<IFollow[]> {
     return this.afStore.collection<IFollow>('Follows', ref =>
       ref.where('FirstUser.Id', '==', UserId)
-    ).valueChanges()
+    ).valueChanges().pipe(share())
   }
 
   GetAUserFollowersNFollowingUserIds(UserId: string): Observable<string[]> {
-    return combineLatest(this.GetAUserFollowing(UserId), this.GetAUserFollowers(UserId)).pipe(
+    const CombinedReturn= combineLatest(this.GetAUserFollowing(UserId), this.GetAUserFollowers(UserId)).pipe(
       map(res => {
         const combined = res[0].concat(res[1]);
         return combined;
@@ -68,6 +69,7 @@ export class FollowService {
         return of(ret)
       })
     )
+    return CombinedReturn.pipe(share())
   }
 }
 // Code	Meaning
