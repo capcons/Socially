@@ -1,3 +1,7 @@
+.about-user-container {
+    /* height: calc(100vh - 162px); */
+}
+
 .controls-container{
     width: 100%;
 }

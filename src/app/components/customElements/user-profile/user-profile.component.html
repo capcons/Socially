@@ -12,14 +12,19 @@
       <span class="subtitle">{{User.About}}</span>
       <div class="subtitle">
         <span>
-          <button mat-button class="btn-follow-count"
-            style="padding: 0 10px;">{{User.FollowersCount}}<br>Followers</button>
+          <button mat-button class="btn-follow-count" style="padding: 0 10px;">
+            {{User.FollowersCount}}<br>Followers
+          </button>
         </span>
         <span>
-          <button mat-button class="btn-follow-count">{{User.FollowingCount}}<br>Following</button>
+          <button mat-button class="btn-follow-count">
+            {{User.FollowingCount}}<br>Following
+          </button>
         </span>
         <span>
-          <button mat-button class="btn-follow-count">{{User.PostsCount}}<br>Posts</button>
+          <button mat-button class="btn-follow-count">
+            {{User.PostsCount}}<br>Posts
+          </button>
         </span>
       </div>
     </div>
@@ -52,47 +57,61 @@
   </div>
 </mat-card>
 
+<!-- Mobile View -->
 <mat-card class="container-fluid d-block d-md-none card-mobile">
   <div class="row">
-    <div class="col-3">
-      <div class="row div-center"><img class="profile-pic" src="{{User.PhotoURL}}"></div>
-      <div class="row div-center"><span class="title">{{User.DisplayName}}</span></div>
-    </div>
-    <div class="col-9">
-      <div class="row div-center counts-container-mobile">
-        <button mat-button class="btn-counts-mobile">{{User.FollowersCount}}<br>Followers</button>
-        <button mat-button class="btn-counts-mobile">{{User.FollowingCount}}<br>Following</button>
-        <button mat-button class="btn-counts-mobile">{{User.PostsCount}}<br>Posts</button>
+    <!-- <div class="col-3"> -->
+      <div class="col-3 div-center">
+        <img class="profile-pic" src="{{User.PhotoURL}}">
       </div>
-
-      <button *ngIf="SelfProfile" class="btn-edit-mobile" (click)="openProfilePicUpdateDialog()" mat-mini-fab>
-        <i class="fal fa-user-edit"></i>
-      </button>
-      <div class="row div-center follow-container-mobile">
-        <div *ngIf="!SelfProfile">
-          <ng-container *ngIf="Following$ | async as Following; else FollowLoading">
-            <ng-container *ngIf="Following.DocId; else NotFollowing">
-              <button mat-stroked-button class="btn-action-mobile" color="primary" (click)="UnfollowThisUser()">
-                <span><i class="fal fa-user-check"></i> Following</span>
-              </button>
-            </ng-container>
-            <ng-template #NotFollowing>
-              <button mat-stroked-button class="btn-action-mobile" (click)="FollowThisUser()" style="padding: 0 26px;">
-                <span><i class="fal far fa-user-plus"></i> Follow</span>
-              </button>
-            </ng-template>
-          </ng-container>
-          <ng-template #FollowLoading>
-            <button mat-stroked-button class="btn-action-mobile" disableRipple style="padding: 0 50px;">
-              <i class="fal fa-spinner fa-spin"></i>
-            </button>
-          </ng-template>
-          <button class="btn-message-mobile btn-action-mobile" (click)="MyAuth.NavTo('Messages/'+User.Id)" mat-stroked-button>
-            <span><i class="fal fa-comment-lines"></i> Message</span>
+      <div class="col-9">
+        <div class="div-center counts-container-mobile">
+          <button mat-button class="btn-counts-mobile">
+            {{User.FollowersCount}}<br>Followers
+          </button>
+          <button mat-button class="btn-counts-mobile">
+            {{User.FollowingCount}}<br>Following
+          </button>
+          <button mat-button class="btn-counts-mobile">
+            {{User.PostsCount}}<br>Posts
           </button>
         </div>
+  
+        <div class="div-center follow-container-mobile">
+          <div *ngIf="!SelfProfile">
+            <ng-container *ngIf="Following$ | async as Following; else FollowLoading">
+              <ng-container *ngIf="Following.DocId; else NotFollowing">
+                <button mat-stroked-button class="btn-action-mobile" color="primary" (click)="UnfollowThisUser()">
+                  <span><i class="fal fa-user-check"></i> Following</span>
+                </button>
+              </ng-container>
+              <ng-template #NotFollowing>
+                <button mat-stroked-button class="btn-action-mobile" (click)="FollowThisUser()" style="padding: 0 26px;">
+                  <span><i class="fal far fa-user-plus"></i> Follow</span>
+                </button>
+              </ng-template>
+            </ng-container>
+            <ng-template #FollowLoading>
+              <button mat-stroked-button class="btn-action-mobile" disableRipple style="padding: 0 50px;">
+                <i class="fal fa-spinner fa-spin"></i>
+              </button>
+            </ng-template>
+            <button class="btn-message-mobile btn-action-mobile" (click)="MyAuth.NavTo('Messages/'+User.Id)"
+              mat-stroked-button>
+              <span><i class="fal fa-comment-lines"></i> Message</span>
+            </button>
+          </div>
+        </div>
       </div>
+    <!-- </div> -->
+  </div>
+  <div class="row div-center">
+    <div class="col">
+      <span class="title">{{User.DisplayName}}</span>
     </div>
+    <button *ngIf="SelfProfile" class="btn-edit-mobile" (click)="openProfilePicUpdateDialog()" mat-mini-fab>
+      <i class="fal fa-user-edit"></i>
+    </button>
   </div>
 </mat-card>
 

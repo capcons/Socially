@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MyAuthService } from 'src/app/Services/my-auth.service';
-import { IUser, IFollow } from 'src/app/Models/i-user';
+import { IFollow } from 'src/app/Models/i-user';
 import { FollowService } from 'src/app/Services/follow.service';
 import { Observable } from 'rxjs';
 
@@ -20,7 +20,6 @@ export class FriendsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.Who, ' - ', this.UserId)
     if (this.Who == 'Followers') {
       this.FollowsItemsToDisplay$ = this.followSrv.GetAUserFollowers(this.UserId);
     }

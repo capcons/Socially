@@ -1,8 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { PeopleComponent } from 'src/app/components/people/people.component';
 import { AuthGuard } from 'src/app/guards/auth.guard';
-import { redirectLoggedInTo, redirectUnauthorizedTo, canActivate } from "@angular/fire/auth-guard";
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
 
 const routes: Routes = [

@@ -115,14 +115,15 @@
 }
 
 .card-mobile {
-    width: 445px;
+    /* width: 445px; */
 }
 
 .card-mobile .profile-pic {
     border-radius: 50%;
     object-fit: cover;
-    height: 100px;
-    width: 100px;
+    width: -moz-available;
+    width: -webkit-fill-available;
+    width: stretch;
 }
 
 .card-mobile .title {
@@ -131,9 +132,7 @@
 }
 
 .btn-edit-mobile {
-    position: absolute;
-    right: 14px;
-    bottom: 0px;
+    margin-right: 10px;
 }
 
 .btn-counts-mobile {

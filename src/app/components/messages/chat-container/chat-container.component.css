@@ -1,5 +1,5 @@
 .chat-card {
-    height: 98%;
+    height: calc(100vh - 118px);
     /* margin-top: 10px; */
 }
 
@@ -9,7 +9,7 @@
 }
 
 .chat-card-content {
-    height: 73%;
+    height: calc(100vh - 296px);
     overflow: auto;
 }
 

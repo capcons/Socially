@@ -2,7 +2,9 @@
   <mat-card class="chat-card">
     <mat-card-header class="chat-card-header">
       <img mat-card-avatar src="{{User.PhotoURL}}" [routerLink]="[ '/User', User.Id ]" class="MousePointer" />
-      <mat-card-title>{{User.DisplayName}}</mat-card-title>
+      <mat-card-title [routerLink]="[ '/User', User.Id ]" class="MousePointer">
+        {{User.DisplayName}}
+      </mat-card-title>
       <mat-card-subtitle>Last scene: </mat-card-subtitle>
       <button class="btn-card-menu" align="end" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Open basic menu">
         <i class="fal fa-ellipsis-v fa-lg"></i>
@@ -52,7 +54,7 @@
               </div>
             </ng-container>
             <ng-template #NoMessages>
-              No message yet.
+              No messages yet.
             </ng-template>
           </ng-container>
           <ng-template #MessagesLoading>
