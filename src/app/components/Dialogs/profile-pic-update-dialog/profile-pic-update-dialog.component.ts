@@ -75,7 +75,7 @@ export class ProfilePicUpdateDialogComponent implements OnInit {
         this.downloadURL$ = fileRef.getDownloadURL();
         this.downloadURL$
         .pipe(take(1))
-        .subscribe((URL) => {
+        .subscribe((URL: string) => {
           this.MyAuth.UpdateProfilePic(URL).subscribe(() => {
             this.dialogRef.close();
           })

@@ -1,9 +1,9 @@
 <mat-card>
   <mat-card-header>
-    <img mat-card-avatar src="{{MyAuth.LoggedUser.PhotoURL}}">
-    <mat-card-title (click)="MyAuth.NavTo('/User/'+MyAuth.LoggedUser.Id)" class="MousePointer">
-      {{MyAuth.LoggedUser.DisplayName}}</mat-card-title>
-    <mat-card-subtitle>{{MyAuth.LoggedUser.About}}</mat-card-subtitle>
+    <img mat-card-avatar src="{{MyAuth.LoggedUser?.PhotoURL}}">
+    <mat-card-title (click)="MyAuth.NavTo('/User/'+MyAuth.LoggedUser?.Id)" class="MousePointer">
+      {{MyAuth.LoggedUser?.DisplayName}}</mat-card-title>
+    <mat-card-subtitle>{{MyAuth.LoggedUser?.About}}</mat-card-subtitle>
     <button mat-icon-button class="btn-menu" [matMenuTriggerFor]="menu" aria-label="Open basic menu">
       <i class="fal fa-ellipsis-v fa-lg"></i>
     </button>

@@ -80,20 +80,19 @@ export class MyAuthService {
 
   public UpdateUserInfo(Value): Observable<void> {
     // if (!Value.Email)
-      return from(this.afStore.doc(`Users/${this.LoggedUser.Id}`).update(Value))
+    return from(this.afStore.doc(`Users/${this.LoggedUser.Id}`).update(Value))
   }
 
-  public UpdateProfilePic(PhotoURL): Observable<void> {
+  public UpdateProfilePic(PhotoURL: string): Observable<void> {
     const UpdateProfilePic = this.afFunctions.httpsCallable('UpdateProfilePic')
-    
-      return UpdateProfilePic({PhotoURL})
+
+    return UpdateProfilePic({ PhotoURL })
   }
 
   public Logout() {
     this.afAuth.auth.signOut().then(() => {
-      // console.log(res)
-      // this.LoggedUserLoading = true;
-      // this.LoggedUser = null;
+      this.LoggedUserLoading = true;
+      this.IsUserLoggedIn = false;
       // this.Notify.openSnackBar("You've logged out successfully", "Login again", () => {
       //   this.NavTo("/Auth/Login");
       // })

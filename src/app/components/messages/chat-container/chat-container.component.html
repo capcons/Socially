@@ -19,13 +19,13 @@
         <div class="container">
           <ng-container *ngIf="Messages$ | async as MessagesArr; else MessagesLoading">
             <ng-container *ngIf="Messages.length; else NoMessages">
-              <div *ngFor="let Message of Messages; trackBy: Message?.DocId" class="row" [ngClass]="{'sent-message': Message.FromId == MyAuth.LoggedUser.Id, 
-                'received-message': Message.FromId != MyAuth.LoggedUser.Id}">
+              <div *ngFor="let Message of Messages; trackBy: Message?.DocId" class="row" [ngClass]="{'sent-message': Message.FromId == MyAuth.LoggedUser?.Id, 
+                'received-message': Message.FromId != MyAuth.LoggedUser?.Id}">
                 <div class="message-box col-9">
                   <div class="row">
                     <div class="col-3 col-lg-2 mt-sm-1 mb-sm-1 mt-lg-3 mb-lg-3 div-center from-pic">
                       <img
-                        src="{{Message.FromId == MyAuth.LoggedUser.Id ? MyAuth.LoggedUser.PhotoURL : User.PhotoURL}}">
+                        src="{{Message.FromId == MyAuth.LoggedUser?.Id ? MyAuth.LoggedUser?.PhotoURL : User.PhotoURL}}">
                     </div>
                     <div class="col message-textAndDate">
                       <p class="message-text">{{Message.Text}}</p>
@@ -33,19 +33,19 @@
                         <span *ngIf="Message.Status==0">
                           <i class="fal fa-spinner fa-spin"></i>
                         </span>
-                        <span *ngIf="Message.Status==1 && Message.FromId==MyAuth.LoggedUser.Id">
+                        <span *ngIf="Message.Status==1 && Message.FromId==MyAuth.LoggedUser?.Id">
                           <i class="fal fa-check"></i>
                         </span>
-                        <span *ngIf="Message.Status==2 && Message.FromId==MyAuth.LoggedUser.Id">
+                        <span *ngIf="Message.Status==2 && Message.FromId==MyAuth.LoggedUser?.Id">
                           <i class="fal fa-check-double"></i>
                         </span>
-                        <span style="color: blue" *ngIf="Message.Status==3 && Message.FromId==MyAuth.LoggedUser.Id"><i
+                        <span style="color: blue" *ngIf="Message.Status==3 && Message.FromId==MyAuth.LoggedUser?.Id"><i
                             class="fal fa-check-double"></i>
                         </span>
                         {{' '+moment(Message.SentOn).calendar(null, DateTimeFormat)}}
                       </p>
                     </div>
-                    <div *ngIf="Message.FromId==MyAuth.LoggedUser.Id" class="delete-div MousePointer"
+                    <div *ngIf="Message.FromId==MyAuth.LoggedUser?.Id" class="delete-div MousePointer"
                       (click)="DeleteAMessage(Message.DocId)">
                       <span><i class="fal fa-trash"></i></span>
                     </div>
