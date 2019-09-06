@@ -19,10 +19,8 @@ export class ImageOptimizationService {
         fr.onload = () => { // when file has loaded
           var img = new Image();
           img.onload = () => {
-            console.log(img.height, img.width)
             height = this.AdjustHeight(img.height, CompressFor);
             width = this.AdjustWidth(img.width, CompressFor);
-            console.log(width, height);
             this.resizeOptions = {
               Resize_Max_Height: height,
               Resize_Max_Width: width,
@@ -33,7 +31,6 @@ export class ImageOptimizationService {
             observer.complete();
           }
           img.src = <string>fr.result; // This is the data URL 
-          console.log(img.height, img.width)
         }
         fr.readAsDataURL(ImageFile);
       });

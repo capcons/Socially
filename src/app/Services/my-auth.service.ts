@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, of } from 'rxjs';
-import { map, share } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { share } from 'rxjs/operators';
 import { IUser } from '../Models/i-user';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { NotificationService } from './notification.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatDialog } from '@angular/material';
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class MyAuthService {
   constructor(
     public afAuth: AngularFireAuth,
     public afStore: AngularFirestore,
+    public afFunctions: AngularFireFunctions,
     public breakpointObserver: BreakpointObserver,
     public router: Router,
     public Notify: NotificationService,
@@ -42,14 +44,12 @@ export class MyAuthService {
         this.LoggedUserLoading = true;
         this.BasicUserInfo = user;
         this.IsUserLoggedIn = true;
+        this.Notify.openSnackBar(`Welcome back, ${user.displayName}`, '')
         this.GetAUserInfoFromStore(user.uid).subscribe(UserInfoFromStore => {
           this.LoggedUser = UserInfoFromStore;
           this.LoggedUserLoading = false;
           if (user.displayName == null || user.displayName == '') {
             this.NavTo('Auth/AdditionInfo')
-          }
-          else {
-            this.Notify.openSnackBar(`Welcome back, ${this.LoggedUser.DisplayName}`, '')
           }
         })
       }
@@ -79,12 +79,18 @@ export class MyAuthService {
   }
 
   public UpdateUserInfo(Value): Observable<void> {
-    if (!Value.Email)
+    // if (!Value.Email)
       return from(this.afStore.doc(`Users/${this.LoggedUser.Id}`).update(Value))
   }
 
+  public UpdateProfilePic(PhotoURL): Observable<void> {
+    const UpdateProfilePic = this.afFunctions.httpsCallable('UpdateProfilePic')
+    
+      return UpdateProfilePic({PhotoURL})
+  }
+
   public Logout() {
-    this.afAuth.auth.signOut().then(res => {
+    this.afAuth.auth.signOut().then(() => {
       // console.log(res)
       // this.LoggedUserLoading = true;
       // this.LoggedUser = null;
