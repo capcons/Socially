@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IUser } from 'src/app/Models/i-user';
-import { cStatesCities } from 'src/app/Models/c-states-cities';
-import { MyAuthService } from 'src/app/Services/my-auth.service';
-import * as moment from 'moment';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
+import { IUser } from 'src/app/Models/i-user';
+import * as moment from 'moment';
+import { cStatesCities } from 'src/app/Models/c-states-cities';
+import { MyAuthService } from 'src/app/Services/my-auth.service';
+import { take } from 'rxjs/operators';
+
 
 @Component({
   selector: 'element-about-user',
@@ -39,7 +41,7 @@ export class AboutUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.User)
+    console.log(this.User)
 
     this.DisplayName = this.User.DisplayName;
     this.About = this.User.About;
@@ -53,21 +55,32 @@ export class AboutUserComponent implements OnInit {
   }
 
   Update(Value) {
+    console.log(Value)
     if (Value.DOB) {
       Value = { DOB: new Date(Value.DOB).valueOf() }
     }
+
     if (Value.DisplayName) {
       this.MyAuth.afAuth.auth.currentUser.updateProfile({ displayName: Value.DisplayName }).then(() => {
-        this.MyAuth.UpdateUserInfo(Value).subscribe(() => {
-          this.MyAuth.Notify.openSnackBar('Update successful', '')
-        }).unsubscribe()
+        this.MyAuth.UpdateUserInfo(Value).pipe(take(1)).subscribe(() => {
+            this.MyAuth.Notify.openSnackBar('Update successful', '')
+            return;
+          })
       })
     }
 
-    if (!Value.Email && this.User.Provider != "Password")
-      this.MyAuth.UpdateUserInfo(Value).subscribe(() => {
-        this.MyAuth.Notify.openSnackBar('Update successful', '')
-      })
+    else if (!Value.Email) {
+      this.MyAuth.UpdateUserInfo(Value).pipe(take(1)).subscribe(() => {
+          this.MyAuth.Notify.openSnackBar('Update successful', '')
+          return;
+        })
+    }
+
+    if (Value.Email && this.User.Provider != "Password") {
+      this.MyAuth.UpdateUserInfo(Value).pipe(take(1)).subscribe(() => {
+          this.MyAuth.Notify.openSnackBar('Update successful', '')
+        })
+    }
   }
 
 }
