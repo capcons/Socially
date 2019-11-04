@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MyAuthService } from 'src/app/Services/my-auth.service';
 import { map, take, tap } from 'rxjs/operators';
-import { FollowService } from 'src/app/Services/follow.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChatsService } from 'src/app/Services/chats.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
@@ -15,6 +14,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 export class MessagesComponent implements OnInit, OnDestroy {
   UserIdListToDisplay$: Observable<string[]> = this.ChatSrv.GetActiveChatUsersList();
   ParamUserId: string = this.router.url.slice(10);
+  SearchTerm: string;
 
   Subscriptions: Subscription[] = [];
 
@@ -25,11 +25,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   constructor(
     public MyAuth: MyAuthService,
-    public FollowSrv: FollowService,
-    public ChatSrv: ChatsService,
+    private ChatSrv: ChatsService,
     public breakpointObserver: BreakpointObserver,
-    public router: Router,
-    public activatedRoute: ActivatedRoute) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.UpdateUsersList()
@@ -38,7 +36,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
       this.UserIdListToDisplay$.pipe(
         take(1),
         tap(r => {
-          this.MyAuth.NavTo(`Messages/${r[0]}`)
+          // console.log(r)
+          if (r.length)
+            this.MyAuth.NavTo(`Messages/${r[0]}`)
         })
       ).subscribe()
     }

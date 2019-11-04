@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { IUser } from 'src/app/Models/i-user';
 import { Observable } from 'rxjs';
 import { IMessage } from 'src/app/Models/i-message';
@@ -11,14 +11,16 @@ import { tap } from 'rxjs/operators';
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.css']
 })
-export class ChatListComponent implements OnInit {
+export class ChatListComponent implements OnInit, OnChanges {
   @Input() UserId: string;
+  @Input() SearchTerm: string = '';
   @Input() IsForHandset: boolean;
   HasUnreadMessages: boolean = false;
 
   User$: Observable<IUser>;
   LastMessage$: Observable<IMessage>;
 
+  User: IUser;
   Show: boolean = true;
 
   constructor(
@@ -39,7 +41,23 @@ export class ChatListComponent implements OnInit {
         this.Show = false;
         this.MyAuth.NavTo('Messages')
       }
+      else {
+        this.User = r;
+      }
     }))
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes)
+    // if (!this.IsForHandset)
+      if (!changes.SearchTerm.firstChange) {
+        const DisplayName = this.User.DisplayName.toLowerCase();
+
+        if (!DisplayName.includes(changes.SearchTerm.currentValue.toLowerCase())) {
+          this.Show = false;
+        }
+        else
+          this.Show = true;
+      }
+  }
 }

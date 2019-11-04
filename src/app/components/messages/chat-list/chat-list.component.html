@@ -1,4 +1,4 @@
-<ng-container *ngIf="Show">
+<div [hidden]="!Show">
   <ng-container *ngIf="IsForHandset; else DesktopView">
     <!-- Mobile view -->
     <ng-container *ngIf="User$ | async as User; else UserLoading">
@@ -54,4 +54,4 @@
       </mat-list-item>
     </ng-template>
   </ng-template>
-</ng-container>
+</div>

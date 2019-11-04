@@ -3,12 +3,12 @@
 }
 
 .chat-heads-container-mobile {
-    height: calc(100vh - 180px);
+    height: calc(100vh - 202.5px);
     overflow: auto visible;
 }
 
 .chat-heads-container {
-    height: 71vh;
+    height: calc(100vh - 209.5px);
     overflow: auto;
 }
 
@@ -24,4 +24,12 @@
 .chat-list-container-mobile {
     height: calc(100vh - 112px);
     padding: 0px 0px 0px 3px;
+}
+
+.chat-list-container h3, .chat-list-container-mobile h4 {
+    margin: 0 0 2px 0;
+}
+
+.my-container {
+    height: calc(100vh - 112px);
 }

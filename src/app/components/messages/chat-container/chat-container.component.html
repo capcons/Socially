@@ -5,7 +5,7 @@
       <mat-card-title [routerLink]="[ '/User', User.Id ]" class="MousePointer">
         {{User.DisplayName}}
       </mat-card-title>
-      <mat-card-subtitle>Last scene: </mat-card-subtitle>
+      <!-- <mat-card-subtitle>Last scene: </mat-card-subtitle> -->
       <button class="btn-card-menu" align="end" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Open basic menu">
         <i class="fal fa-ellipsis-v fa-lg"></i>
       </button>
@@ -23,10 +23,10 @@
                 'received-message': Message.FromId != MyAuth.LoggedUser?.Id}">
                 <div class="message-box col-9">
                   <div class="row">
-                    <div class="col-3 col-lg-2 mt-sm-1 mb-sm-1 mt-lg-3 mb-lg-3 div-center from-pic">
+                    <!-- <div class="col-3 col-lg-2 mt-sm-1 mb-sm-1 mt-lg-3 mb-lg-3 div-center from-pic">
                       <img
                         src="{{Message.FromId == MyAuth.LoggedUser?.Id ? MyAuth.LoggedUser?.PhotoURL : User.PhotoURL}}">
-                    </div>
+                    </div> -->
                     <div class="col message-textAndDate">
                       <p class="message-text">{{Message.Text}}</p>
                       <p class="message-time">

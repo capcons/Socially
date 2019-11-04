@@ -34,8 +34,8 @@ export class ChatContainerComponent implements OnInit, AfterViewChecked {
     nextDay: '[Tomorrow] - h:mm a',
     nextWeek: 'dddd - h:mm a',
     lastDay: '[Yesterday] - h:mm a',
-    lastWeek: '[Last] dddd - h:mm a',
-    sameElse: 'ddd, M/D/YY - h:mm a'
+    lastWeek: '[Last] ddd - h:mm a',
+    sameElse: 'D/M/YY - h:mm a'
   }
 
   constructor(

@@ -9,7 +9,7 @@
 }
 
 .chat-card-content {
-    height: calc(100vh - 296px);
+    height: calc(100vh - 265px);
     overflow: auto;
 }
 
@@ -58,6 +58,8 @@
 }
 
 .delete-div {
-    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    padding-right: 5px;
     padding-top: 5px;
 }
