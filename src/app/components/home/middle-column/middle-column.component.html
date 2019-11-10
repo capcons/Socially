@@ -1,5 +1,8 @@
 <div style="margin:0 15px;">
   <mat-card style="margin-bottom: 16px;">
+    <mat-card-header>
+      <mat-card-title>Upload a post</mat-card-title>
+    </mat-card-header>
     <input type="file" #InputImage (change)="OnChange($event)" style="display: none;" accept="image/*" required>
     <mat-form-field style="width:95%;">
       <input matInput [(ngModel)]="InputCaption" placeholder="Write a caption" autocomplete="off">
