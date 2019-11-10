@@ -2,6 +2,9 @@
 
 This is social network website project which is build with [Angular 8](https://angular.io), [Angular Material](https://material.angular.io) for front end design and [Firebase](https://firebase.google.com) cloud for a secure backend.
 
+Looking for a good job where I can give my best to be the best.
+Please contact me on firoz2580@gmail.com to offer any exciting opportunity.
+
 ## Functionality overview
 
 This application is a social networking site (i.e. Facebook, Instagram). It uses a Firebase Cloud services for all requests, including authentication. You can view a live demo over at https://social-lyy.web.app
